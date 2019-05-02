@@ -22,7 +22,17 @@
 \maketitle
 
 \section{Turing Machine Definition}
-
+The following Turing Machine T decides $A=\{a^{n}b^{n}c^{n}d^{n}e^{n} \vert n \geq 0\}$:\break
+T = "on input $\langle M,R\rangle$ where M is a DFA and R is a regular expression:\\
+\hspace{20 pt} 0. On empty input string accept, otherwise go to step 1\\
+\hspace{20 pt} 1. Mark one a with an u, if there are no more a's go to step 7\\
+\hspace{20 pt} 2. Mark one b with an v, if there are not b's to mark reject\\
+\hspace{20 pt} 3. Mark one c with an x, if there are not c's to mark reject\\
+\hspace{20 pt} 4. Mark one d with an y, if there are not d's to mark reject\\
+\hspace{20 pt} 5. Mark one e with an z, if there are not e's to mark reject\\
+\hspace{20 pt} 6. Repeat steps 1-5 until no a's remain\\
+\hspace{20 pt} 7. If any b's, c's, d's, or e's remain on the tape reject."\\
+\hspace{20 pt} 8. If no a's, b's, c's, d's, or e's remain on the tape reject."
 \section{Turing Machine Implementation}
 
 \section{Turing Machine Testing}
