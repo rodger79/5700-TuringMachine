@@ -1,0 +1,7 @@
+abcde
+aabbccddee
+aaabbbcccdddeee
+aaaabbbbccccddddeeee
+aaaaabbbbbcccccdddddeeeee
+aaaaaabbbbbbccccccddddddeeeeee
+aaaaaaabbbbbbbcccccccdddddddeeeeeee
