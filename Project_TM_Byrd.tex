@@ -24,10 +24,11 @@
 \title{Low Level Implementation of a Turing Machine}
 \author{Rodger Byrd}
 \maketitle
-For this project I am implementing the following language $A=\{a^{n}b^{n}c^{n}d^{n}e^{n} \vert n \geq 0\}$ as a Turing Machine with JFLAP\cite{jflap}.
+\section{Project Scope}
+For this project I am implementing the following language $A=\{a^{n}b^{n}c^{n}d^{n}e^{n} \vert n \geq 0\}$ as a Turing machine with JFLAP\cite{jflap}. I will create a Turing machine definition, then describe the implementation in JFLAP and analyze the results.
 
 \section{Turing Machine Definition}
-The following Turing Machine T decides $A=\{a^{n}b^{n}c^{n}d^{n}e^{n} \vert n \geq 0\}$:\break
+The following Turing machine T decides $A=\{a^{n}b^{n}c^{n}d^{n}e^{n} \vert n \geq 0\}$:\break
 T = "on input w where w $ \in \sum$:\\
 \hspace{20 pt} 0. On empty input string accept, otherwise go to step 1\\
 \hspace{20 pt} 1. Mark one a with an u, if there are no more a's go to step 7\\
@@ -39,16 +40,19 @@ T = "on input w where w $ \in \sum$:\\
 \hspace{20 pt} 7. Scan from beginning of tape, and if any b's, c's, d's, or e's remain on the tape reject."\\
 \hspace{20 pt} 8. If no a's, b's, c's, d's, or e's remain on the tape accept."
 \section{Turing Machine Implementation}
-The following descirbes the implementation shown in Figure 1. The implementation files are in the github repository \cite{git}.\\
+The following describes the implementation shown in Figure 1. The implementation files are in the github repository \cite{git}.\\
 \begin{figure}[H]
   \includegraphics[width=\linewidth]{TuringMachine.jpg}
   \caption{Turing Machine}
   \label{fig:TM1}
 \end{figure}
-On the input string, if the tape is blank, go to the accept state. If there is an "a", mark it with a "u" and move the tape right and go to state 1. The next state skips through the rest of the "a's" and any "v's" (which are marked "b's"). It then finds a "b" on the tape and marks it with a "v". If there is no "b" it is rejected. The following states (2,3,4) do the same operation but for inputs "c,d". To transition to state 5 from state 4, the TM must find an "e" on the tape and move the head left. From this point state 5 moves the head back to the "u" which is the first marked "a" and moves the head right. At this point, the tape head should be on another "a" to mark, or on the first marked "b". If it finds an "a" it goes through the state 0-5 loop until there are no more a's to mark. If it finds a "v", then all "a's" have been marked and it moves the tape head back to the beginning of the tape with state 6. State 7 moves the tape head right across the tape for "u,v,x,y,z", if it encounters anything other than "u,v,x,y,z" it rejects. If it ends up at a blank spot on the tape, it moves to the accept state.\\
+On the input string, if the tape is blank, go to the accept state. If there is an "a", mark it with a "u" and move the tape right and go to state 1. The next state skips through the rest of the "a"s and any "v"s (which are marked "b"s). It then finds a "b" on the tape and marks it with a "v". If there is no "b" it is rejected. The following states (2,3,4) do the same operation but for inputs "c,d". To transition to state 5 from state 4, the TM must find an "e" on the tape and move the head left. From this point state 5 moves the head back to the first "u" it finds which is the first marked "a" and moves the head right. At this point, the tape head should be on another "a" to mark, or on the first marked "b". If it finds an "a" it goes through the state 0-5 loop until there are no more "a"s to mark. If it finds a "v", then all "a"s have been marked and it moves the tape head back to the beginning of the tape with state 6. State 7 moves the tape head right across the tape for "u,v,x,y,z", if it encounters anything other than "u,v,x,y,z" it rejects. If it ends up at a blank spot on the tape, it moves to the accept state.\\
 
 \section{Turing Machine Testing}
 To test the TM, I created a shell script to generate test input strings of various lengths. It is called \path{createteststrings.sh}. It creates random strings in the language to see if any are accepted by the turing machine. The files I used for testing were \path{testfile_abcde_rand.txt} and \path{testfile_pass.txt}. I was initially hoping to find some accepted strings in my random file, but it is very difficult to match the pattern randomly. Even testing 1500 strings of various length from 5-30 characters, there weren't any acceptable strings. The second file \path{testfile_pass.txt} was used to verify known valid strings. To verify my random strings file didn't have any strings that should be accepted, I performed a grep on it to look for valid strings. I found only invalid strings and all were rejected when simulating the input strings in JFLAP.
+
+\section{Analysis}
+I found using JFLAP to be very similar to programming. You have to think about your design before you go to implement it, then you can debug/test it. I had a few errors I had to correct once I started testing. It is easy to accidentally enter a transition incorrectly. The JFLAP tutorials were helpful in learning how to use the tool. The Language that I chose (A) was pretty straightforward to implement. It comes down to a "marking loop" then a "validation scan" of the input string. This problem is clearly in P. It is quickly solvable and the machine has to scan the string approximately m times, where m is the number of leading "a"s, then one time across the whole input string to check the marked values. This puts it in ${O}$(TIME(N)). 
 
 \begin{thebibliography}{9}
 \bibitem{git} 
